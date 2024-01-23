@@ -21,7 +21,7 @@ function InputBox({
         <input
           id={id}
           type="number"
-          className="outline-none w-full bg-transparent py-1.5"
+          className="outline-none w-full bg-transparent py-1.5 placeholder-black"
           placeholder="0"
           disabled={amountDisabled}
           value={amount}
