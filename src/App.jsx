@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import moneyImage from "./assets/moneyImage.jpg";
 import viteLogo from "/vite.svg";
 import "./App.css";
@@ -6,21 +6,24 @@ import useCurrencyInfo from "./hooks/useCurrencyInfo";
 import { InputBox } from "./Components/index";
 
 function App() {
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState();
   const [from, setFrom] = useState("usd");
   const [to, setTo] = useState("inr");
   const [convertedAmount, setConvertedAmount] = useState(0);
   const currencyInfo = useCurrencyInfo(from);
   const options = Object.keys(currencyInfo);
-  const convert = () => {
-    setConvertedAmount((amount * currencyInfo[to]).toFixed(2));
-  };
+
+  if (amount === 0) setAmount(null);
   const swap = () => {
     setFrom(to);
     setTo(from);
     setConvertedAmount(amount);
     setAmount(convertedAmount);
   };
+
+  useEffect(() => {
+    setConvertedAmount((amount * currencyInfo[to]).toFixed(2));
+  }, [amount]); //when the amount changes
   return (
     <>
       <div
